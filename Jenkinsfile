@@ -63,7 +63,7 @@ pipeline {
     post {
         always {
             // Clean up Docker after the pipeline
-            sh 'docker system prune -f'
+            bat 'docker system prune -f'
         }
         success {
             // Notify of success
