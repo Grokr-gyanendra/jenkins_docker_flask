@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  customer-db:
+    image: mysql:latest
+    container_name: customer-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - customer-network
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost --silent"]
+      interval: 5s
+      retries: 5
+      start_period: 30s
+      timeout: 2s
+
+  customer-app:
+    build: ./app
+    container_name: customer-app
+    environment:
+      - FLASK_ENV=development
+      - FLASK_APP=main.py
+      - SQLALCHEMY_DATABASE_URI=mysql+pymysql://root:root@customer-db:3306/db
+    ports:
+      - "5000:5000"
+    depends_on:
+      customer-db:
+        condition: service_healthy
+    volumes:
+      - ./app:/app
+    networks:
+      - customer-network
+    restart: always
+
+volumes:
+  mysql_data:
+
+networks:
+  customer-network:
+    driver: bridge
