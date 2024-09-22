@@ -2,8 +2,9 @@ pipeline {
     agent any
 
     environment {
-        // Secure DockerHub credentials (set these as Jenkins credentials, not hard-coded)
-        DOCKER_HUB_CREDENTIALS = credentials('dockerhub-credentials-id')
+        // Set DockerHub credentials (create them in Jenkins)
+        DOCKER_HUB_CREDENTIALS_USR = 'gyanendransthshukla4035'
+        DOCKER_HUB_CREDENTIALS_PSW = '@Prince2004'
         // Docker image name
         IMAGE_NAME = 'gyanendranathshukla4035/flask-app'
     }
@@ -18,7 +19,7 @@ pipeline {
 
         stage('Unit Tests') {
             steps {
-                // Uncomment and modify as needed to run actual tests
+                // Run unit tests inside the app directory
                 // dir('app') {
                 //     sh 'pytest'
                 // }
@@ -31,6 +32,7 @@ pipeline {
                 script {
                     // Build Docker image
                     bat 'docker build -t %IMAGE_NAME%:%BUILD_NUMBER% ./app'
+
                 }
             }
         }
@@ -51,7 +53,7 @@ pipeline {
 
         stage('Deploy to Local Environment') {
             steps {
-                // Deploy using docker-compose on Linux (if applicable)
+                // Deploy using docker-compose
                 sh 'docker-compose -f docker-compose.yml up -d'
             }
         }
