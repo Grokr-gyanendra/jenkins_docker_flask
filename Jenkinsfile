@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         // Set DockerHub credentials (create them in Jenkins)
-        DOCKER_HUB_CREDENTIALS_USR = 'gyanendransthshukla4035'
+        DOCKER_HUB_CREDENTIALS_USR = 'gyanendranathshukla4035'
         DOCKER_HUB_CREDENTIALS_PSW = '@Prince2004'
         // Docker image name
         IMAGE_NAME = 'gyanendranathshukla4035/flask-app'
