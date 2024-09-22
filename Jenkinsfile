@@ -67,13 +67,13 @@ pipeline {
         }
         success {
             // Notify of success
-            mail to: 'your-email@example.com',
+            mail to: 'gyanendra.shukla@datagrokr.com',
                  subject: "Build #${BUILD_NUMBER} Succeeded",
                  body: "Good news! The build #${BUILD_NUMBER} has succeeded."
         }
         failure {
             // Notify of failure
-            mail to: 'your-email@example.com',
+            mail to: 'gyanendra.shukla@datagrokr.com',
                  subject: "Build #${BUILD_NUMBER} Failed",
                  body: "Unfortunately, the build #${BUILD_NUMBER} failed."
         }
