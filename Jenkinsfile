@@ -55,7 +55,7 @@ pipeline {
         stage('Deploy to Local Environment') {
             steps {
                 // Deploy using docker-compose
-                sh 'docker-compose -f docker-compose.yml up -d'
+                bat 'docker-compose -f docker-compose.yml up -d'
             }
         }
     }
