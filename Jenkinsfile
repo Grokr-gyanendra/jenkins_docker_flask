@@ -2,9 +2,8 @@ pipeline {
     agent any
 
     environment {
-        // Set DockerHub credentials (create them in Jenkins)
-        DOCKER_HUB_CREDENTIALS_USR = 'gyanendransthshukla4035'
-        DOCKER_HUB_CREDENTIALS_PSW = '@Prince2004'
+        // Secure DockerHub credentials (set these as Jenkins credentials, not hard-coded)
+        DOCKER_HUB_CREDENTIALS = credentials('dockerhub-credentials-id')
         // Docker image name
         IMAGE_NAME = 'gyanendranathshukla4035/flask-app'
     }
@@ -19,7 +18,7 @@ pipeline {
 
         stage('Unit Tests') {
             steps {
-                // Run unit tests inside the app directory
+                // Uncomment and modify as needed to run actual tests
                 // dir('app') {
                 //     sh 'pytest'
                 // }
@@ -32,7 +31,6 @@ pipeline {
                 script {
                     // Build Docker image
                     bat 'docker build -t %IMAGE_NAME%:%BUILD_NUMBER% ./app'
-
                 }
             }
         }
@@ -40,16 +38,20 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 script {
-                    // Login to Docker Hub and push the image
-                    bat 'docker login -u ${DOCKER_HUB_CREDENTIALS_USR} -p ${DOCKER_HUB_CREDENTIALS_PSW}'
-                    bat 'docker push ${IMAGE_NAME}:${BUILD_NUMBER}'
+                    // Use --password-stdin for secure Docker login
+                    bat """
+                        echo ${DOCKER_HUB_CREDENTIALS_PSW} | docker login -u ${DOCKER_HUB_CREDENTIALS_USR} --password-stdin
+                    """
+                    
+                    // Push the Docker image to Docker Hub
+                    bat 'docker push %IMAGE_NAME%:%BUILD_NUMBER%'
                 }
             }
         }
 
         stage('Deploy to Local Environment') {
             steps {
-                // Deploy using docker-compose
+                // Deploy using docker-compose on Linux (if applicable)
                 sh 'docker-compose -f docker-compose.yml up -d'
             }
         }
