@@ -31,7 +31,8 @@ pipeline {
             steps {
                 script {
                     // Build Docker image
-                    bat 'docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} ./app'
+                    bat 'docker build -t %IMAGE_NAME%:%BUILD_NUMBER% ./app'
+
                 }
             }
         }
