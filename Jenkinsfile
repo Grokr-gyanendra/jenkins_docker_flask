@@ -3,17 +3,17 @@ pipeline {
 
     environment {
         // Set DockerHub credentials (create them in Jenkins)
-        DOCKER_HUB_CREDENTIALS_USR = gyanendransthshukla4035
-        DOCKER_HUB_CREDENTIALS_PSW = password
+        DOCKER_HUB_CREDENTIALS_USR = 'gyanendransthshukla4035'
+        DOCKER_HUB_CREDENTIALS_PSW = '@Prince2004'
         // Docker image name
-        IMAGE_NAME = 'your-dockerhub-username/customer-app'
+        IMAGE_NAME = 'gyanendranathshukla4035/flask-app'
     }
 
     stages {
         stage('Checkout') {
             steps {
                 // Checkout the code from your repository
-                git 'https://your-repository-url.git'
+                git 'https://github.com/Grokr-gyanendra/jenkins_docker_flask.git'
             }
         }
 
@@ -31,7 +31,7 @@ pipeline {
             steps {
                 script {
                     // Build Docker image
-                    sh 'docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} ./app'
+                    bat 'docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} ./app'
                 }
             }
         }
@@ -40,8 +40,8 @@ pipeline {
             steps {
                 script {
                     // Login to Docker Hub and push the image
-                    sh 'docker login -u ${DOCKER_HUB_CREDENTIALS_USR} -p ${DOCKER_HUB_CREDENTIALS_PSW}'
-                    sh 'docker push ${IMAGE_NAME}:${BUILD_NUMBER}'
+                    bat 'docker login -u ${DOCKER_HUB_CREDENTIALS_USR} -p ${DOCKER_HUB_CREDENTIALS_PSW}'
+                    bat 'docker push ${IMAGE_NAME}:${BUILD_NUMBER}'
                 }
             }
         }
