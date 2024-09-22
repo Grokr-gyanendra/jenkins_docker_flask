@@ -41,9 +41,10 @@ pipeline {
             steps {
                 script {
                     // Use --password-stdin for secure Docker login
-                    bat """
-                        echo ${DOCKER_HUB_CREDENTIALS_PSW} | docker login -u ${DOCKER_HUB_CREDENTIALS_USR} --password-stdin
-                    """
+                    // bat """
+                    //     echo ${DOCKER_HUB_CREDENTIALS_PSW} | docker login -u ${DOCKER_HUB_CREDENTIALS_USR} --password-stdin
+                    // """
+                    bat "docker login -u gyanendranathshukla4035 -p Prince2004"
                     
                     // Push the Docker image to Docker Hub
                     bat 'docker push %IMAGE_NAME%:%BUILD_NUMBER%'
