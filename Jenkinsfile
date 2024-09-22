@@ -60,22 +60,22 @@ pipeline {
         }
     }
 
-    // post {
-    //     always {
-    //         // Clean up Docker after the pipeline
-    //         sh 'docker system prune -f'
-    //     }
-    //     success {
-    //         // Notify of success
-    //         mail to: 'your-email@example.com',
-    //              subject: "Build #${BUILD_NUMBER} Succeeded",
-    //              body: "Good news! The build #${BUILD_NUMBER} has succeeded."
-    //     }
-    //     failure {
-    //         // Notify of failure
-    //         mail to: 'your-email@example.com',
-    //              subject: "Build #${BUILD_NUMBER} Failed",
-    //              body: "Unfortunately, the build #${BUILD_NUMBER} failed."
-    //     }
-    // }
+    post {
+        always {
+            // Clean up Docker after the pipeline
+            sh 'docker system prune -f'
+        }
+        success {
+            // Notify of success
+            mail to: 'your-email@example.com',
+                 subject: "Build #${BUILD_NUMBER} Succeeded",
+                 body: "Good news! The build #${BUILD_NUMBER} has succeeded."
+        }
+        failure {
+            // Notify of failure
+            mail to: 'your-email@example.com',
+                 subject: "Build #${BUILD_NUMBER} Failed",
+                 body: "Unfortunately, the build #${BUILD_NUMBER} failed."
+        }
+    }
 }
